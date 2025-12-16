@@ -84,9 +84,12 @@ const server = http.createServer(async (req, res) => {
       "Content-Type": "text/html",
     });
     res.end(`
-      <html>
+      <!DOCTYPE html>
+      <html lang="en">
         <head>
-          <title>Snapshot API</title>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Snapshot API</title>
           <style>
             :root {
               --text-primary: oklch(0.96 0 264);
@@ -205,3 +208,4 @@ const server = http.createServer(async (req, res) => {
 server.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`);
 });
+
