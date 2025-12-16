@@ -32,14 +32,16 @@ const takeScreenshot = async (targetUrl) => {
 
     await page.goto(targetUrl, {
       waitUntil: "networkidle0",
+      timeout: 30000,
     });
+    
     return await page.screenshot({
       type: "png",
       fullPage: true,
     });
   } catch (error) {
-    console.error("Failed to take screenshot:", error);
-    throw new Error("Screenshot failed");
+    console.error("Failed to take screenshot for:", targetUrl, "Error:", error.message);
+    throw new Error("SCREENSHOT_FAILED");
   } finally {
     if (browser) {
       await browser.close();
@@ -57,7 +59,7 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(400, {
         "Content-Type": "text/plain",
       });
-      res.end('Error: Invalid or missing "url" query parameter.');
+      res.end('Error: Invalid or missing "url" query parameter. Example: /api/ss?url=https://example.com');
       return;
     }
 
@@ -68,19 +70,28 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(200, {
         "Content-Type": "image/png",
         "Content-Length": screenshotBuffer.length,
-        "Content-Disposition": `inline; filename="screenshot.png"`,
+        "Content-Disposition": `inline; filename="screenshot-${new Date().getTime()}.png"`,
       });
 
       res.end(screenshotBuffer);
-      console.log("Screenshot successfully sent.");
+      console.log("Screenshot successfully sent for:", targetUrl);
     } catch (error) {
-      res.writeHead(500, {
+      console.error(`Error processing screenshot request for ${targetUrl}:`, error.message);
+      
+      let statusCode = 500;
+      let errorMessage = "Internal Server Error: Could not capture screenshot.";
+
+      if (error.message === "SCREENSHOT_FAILED") {
+        errorMessage = "Screenshot failed, check if the target URL is accessible and valid.";
+      }
+      
+      res.writeHead(statusCode, {
         "Content-Type": "text/plain",
       });
-      res.end("Internal Server Error: Could not capture screenshot.");
+      res.end(errorMessage);
     }
-  } else {
-    res.writeHead(404, {
+  } else if (req.method === "GET" && requestUrl.pathname === "/") {
+    res.writeHead(200, {
       "Content-Type": "text/html",
     });
     res.end(`
@@ -126,7 +137,7 @@ const server = http.createServer(async (req, res) => {
               margin: 50px auto 0;
               border-radius: 12px;
               background-color: var(--card-bg);
-              box-shadow: var(--shadow-m); 
+              box-shadow: var(--shadow-m);  
             }
             
             h1 {
@@ -167,7 +178,7 @@ const server = http.createServer(async (req, res) => {
               overflow-x: auto;
               display: block;
               margin-top: 10px;
-              box-shadow: var(--shadow-s); 
+              box-shadow: var(--shadow-s);  
             }
 
             .placeholder {
@@ -184,9 +195,9 @@ const server = http.createServer(async (req, res) => {
             </p>
             
             <p>
-              <strong>Instantly generate full-page, high-fidelity PNG screenshots</strong> of any live URL. 
-              This service uses a headless browser environment to ensure 
-              <strong>100% accurate rendering</strong> of complex, JavaScript-driven web pages, 
+              <strong>Instantly generate full-page, high-fidelity PNG screenshots</strong> of any live URL.  
+              This service uses a headless browser environment to ensure  
+              <strong>100% accurate rendering</strong> of complex, JavaScript-driven web pages,  
               cutting your content creation time from minutes to milliseconds.
             </p>
             
@@ -202,10 +213,15 @@ const server = http.createServer(async (req, res) => {
         </body>
       </html>
     `);
+
+  } else {
+    res.writeHead(404, {
+      "Content-Type": "text/plain",
+    });
+    res.end("404 Not Found: Use /api/ss?url=<website_url> to capture a screenshot.");
   }
 });
 
 server.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`);
 });
-
