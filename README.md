@@ -25,8 +25,5 @@ Send a GET request to the API endpoint with a target URL:
 
 The response will be a PNG image of the requested page.
 
-## Deployment
-This project is hosted on Render.
-
 ## Author
 Developed by [xodobyte](https://github.com/xodo2fast4u)
