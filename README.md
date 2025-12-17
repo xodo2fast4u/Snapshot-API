@@ -1,9 +1,23 @@
 # Snapshot API
 
-![Node.js](https://img.shields.io/badge/node-%3E%3D18-green?style=flat)
-![puppeteer](https://img.shields.io/badge/puppeteer-latest-blue?style=flat)
-![license](https://img.shields.io/badge/license-ISC-lightgrey?style=flat)
-![render](https://img.shields.io/badge/hosted%20on-Render-purple?style=flat)
+<div align="center">
+  
+<p align="center">
+  <a href="https://nodejs.org">
+    <img src="https://img.shields.io/badge/Compat-Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js Compatible">
+  </a>
+  <a href="https://pptr.dev">
+    <img src="https://img.shields.io/badge/Automation-Puppeteer-2E8B57?style=for-the-badge&logo=puppeteer&logoColor=white" alt="Puppeteer">
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/License-ISC-lightgrey?style=for-the-badge&logo=open-source-initiative&logoColor=white" alt="ISC License">
+  </a>
+  <a href="https://render.com">
+    <img src="https://img.shields.io/badge/Hosted_on-Render-764ABC?style=for-the-badge&logo=render&logoColor=white" alt="Hosted on Render">
+  </a>
+</p>
+
+</div>
 
 Snapshot API is a simple, fast, and reliable service to generate **full-page PNG screenshots** of any live website.  
 It uses a headless browser environment to ensure **pixel-perfect rendering** of complex, JavaScript-driven pages.
