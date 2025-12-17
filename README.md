@@ -8,6 +8,9 @@
 Snapshot API is a simple, fast, and reliable service to generate **full-page PNG screenshots** of any live website.  
 It uses a headless browser environment to ensure **pixel-perfect rendering** of complex, JavaScript-driven pages.
 
+## Preview 
+![Snapshot API Screenshot](https://files.catbox.moe/r4ab7x.webp)
+
 ## Features
 - Full-page, high-fidelity screenshots
 - Accurate rendering of modern web apps
