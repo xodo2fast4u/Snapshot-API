@@ -9,7 +9,7 @@
   <a href="https://pptr.dev">
     <img src="https://img.shields.io/badge/Automation-Puppeteer-2E8B57?style=for-the-badge&logo=puppeteer&logoColor=white" alt="Puppeteer">
   </a>
-  <p align="center"> <a href="https://nodejs.org"> <img src="https://img.shields.io/badge/Compat-Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js Compatible"> </a> <a href="https://pptr.dev"> <img src="https://img.shields.io/badge/Automation-Puppeteer-2E8B57?style=for-the-badge&logo=puppeteer&logoColor=white" alt="Puppeteer"> </a> <a href="LICENSE"> <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&logo=open-source-initiative&logoColor=white" alt="MIT License"> </a>
+  <a href="LICENSE"> <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&logo=open-source-initiative&logoColor=white" alt="MIT License"> </a>
   <a href="https://render.com">
     <img src="https://img.shields.io/badge/Hosted_on-Render-764ABC?style=for-the-badge&logo=render&logoColor=white" alt="Hosted on Render">
   </a>
