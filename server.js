@@ -3,7 +3,7 @@ const { URL } = require("url");
 const puppeteer = require("puppeteer");
 
 const API_ROUTE_PATH = "/api/ss";
-const PORT = 3000;
+const PORT = process.env.port || 3000;
 
 const isValidUrl = (url) => {
   try {
@@ -22,7 +22,16 @@ const takeScreenshot = async (targetUrl) => {
   try {
     browser = await puppeteer.launch({
       headless: "new",
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
+        "--disable-software-rasterizer",
+        "--single-process",
+        "--no-zygote",
+      ],
+      executablePath: puppeteer.executablePath(),
     });
     const page = await browser.newPage();
     await page.setViewport({
@@ -31,16 +40,21 @@ const takeScreenshot = async (targetUrl) => {
     });
 
     await page.goto(targetUrl, {
-      waitUntil: "networkidle0",
+      waitUntil: "networkidle2",
       timeout: 30000,
     });
-    
+
     return await page.screenshot({
       type: "png",
       fullPage: true,
     });
   } catch (error) {
-    console.error("Failed to take screenshot for:", targetUrl, "Error:", error.message);
+    console.error(
+      "Failed to take screenshot for:",
+      targetUrl,
+      "Error:",
+      error.message
+    );
     throw new Error("SCREENSHOT_FAILED");
   } finally {
     if (browser) {
@@ -59,7 +73,9 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(400, {
         "Content-Type": "text/plain",
       });
-      res.end('Error: Invalid or missing "url" query parameter. Example: /api/ss?url=https://example.com');
+      res.end(
+        'Error: Invalid or missing "url" query parameter. Example: /api/ss?url=https://example.com'
+      );
       return;
     }
 
@@ -76,15 +92,19 @@ const server = http.createServer(async (req, res) => {
       res.end(screenshotBuffer);
       console.log("Screenshot successfully sent for:", targetUrl);
     } catch (error) {
-      console.error(`Error processing screenshot request for ${targetUrl}:`, error.message);
-      
+      console.error(
+        `Error processing screenshot request for ${targetUrl}:`,
+        error.message
+      );
+
       let statusCode = 500;
       let errorMessage = "Internal Server Error: Could not capture screenshot.";
 
       if (error.message === "SCREENSHOT_FAILED") {
-        errorMessage = "Screenshot failed, check if the target URL is accessible and valid.";
+        errorMessage =
+          "Screenshot failed, check if the target URL is accessible and valid.";
       }
-      
+
       res.writeHead(statusCode, {
         "Content-Type": "text/plain",
       });
@@ -213,12 +233,13 @@ const server = http.createServer(async (req, res) => {
         </body>
       </html>
     `);
-
   } else {
     res.writeHead(404, {
       "Content-Type": "text/plain",
     });
-    res.end("404 Not Found: Use /api/ss?url=<website_url> to capture a screenshot.");
+    res.end(
+      "404 Not Found: Use /api/ss?url=<website_url> to capture a screenshot."
+    );
   }
 });
 
