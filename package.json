@@ -20,7 +20,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "puppeteer": "^24.33.0",
+    "puppeteer": "^23.10.1",
     "semver": "^7.7.3"
   }
 }
