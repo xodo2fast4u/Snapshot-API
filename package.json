@@ -5,8 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "build": "chmod +x build.sh && ./build.sh"
+    "start": "node server.js"
   },
   "keywords": [
     "screenshot",

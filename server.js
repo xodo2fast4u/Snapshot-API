@@ -3,7 +3,7 @@ const { URL } = require("url");
 const puppeteer = require("puppeteer");
 
 const API_ROUTE_PATH = "/api/ss";
-const PORT = process.env.port || 3000;
+const PORT = process.env.PORT || 3000;
 
 const isValidUrl = (url) => {
   try {
@@ -31,7 +31,8 @@ const takeScreenshot = async (targetUrl) => {
         "--single-process",
         "--no-zygote",
       ],
-      executablePath: puppeteer.executablePath(),
+      executablePath:
+        process.env.PUPPETEER_EXECUTABLE_PATH || puppeteer.executablePath(),
     });
     const page = await browser.newPage();
     await page.setViewport({
@@ -53,7 +54,7 @@ const takeScreenshot = async (targetUrl) => {
       "Failed to take screenshot for:",
       targetUrl,
       "Error:",
-      error.message
+      error.message,
     );
     throw new Error("SCREENSHOT_FAILED");
   } finally {
@@ -74,7 +75,7 @@ const server = http.createServer(async (req, res) => {
         "Content-Type": "text/plain",
       });
       res.end(
-        'Error: Invalid or missing "url" query parameter. Example: /api/ss?url=https://example.com'
+        'Error: Invalid or missing "url" query parameter. Example: /api/ss?url=https://example.com',
       );
       return;
     }
@@ -94,7 +95,7 @@ const server = http.createServer(async (req, res) => {
     } catch (error) {
       console.error(
         `Error processing screenshot request for ${targetUrl}:`,
-        error.message
+        error.message,
       );
 
       let statusCode = 500;
@@ -238,7 +239,7 @@ const server = http.createServer(async (req, res) => {
       "Content-Type": "text/plain",
     });
     res.end(
-      "404 Not Found: Use /api/ss?url=<website_url> to capture a screenshot."
+      "404 Not Found: Use /api/ss?url=<website_url> to capture a screenshot.",
     );
   }
 });
