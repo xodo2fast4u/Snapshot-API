@@ -2,10 +2,12 @@
   "name": "ss-api",
   "version": "1.0.0",
   "description": "A lightweight Node.js API that generates full-page PNG screenshots of any live URL using Puppeteer, ensuring accurate rendering of modern, JavaScript-driven sites.",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "bun --watch server.ts",
+    "chrome": "bun x puppeteer browsers install chrome",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [
     "screenshot",
@@ -17,7 +19,7 @@
     "web-capture"
   ],
   "author": "xodobyte",
-  "license": "ISC",
+  "license": "MIT",
   "type": "commonjs",
   "dependencies": {
     "puppeteer": "^23.10.1",

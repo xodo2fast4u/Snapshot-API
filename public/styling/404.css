@@ -1,0 +1,65 @@
+:root {
+  --text-primary: oklch(0.96 0 264);
+  --text-halfmute: oklch(0.94 0 264);
+  --text-muted: oklch(0.74 0 264);
+
+  --bg: oklch(0.1 0 264);
+  --card-bg: oklch(0.2 0 264);
+  --code-bg: oklch(0.3 0 264);
+  --accent: oklch(0.96 0 264);
+
+  --shadow-s: inset 0 1px 3px #ffffff30, 0 1px 2px #00000030, 0 2px 3px #00000020;
+  --shadow-m: inset 0 1px 2px #ffffff50, 0 2px 4px #00000030, 0 4px 8px #00000015;
+  --shadow-l: inset 0 1px 2px #ffffff70, 0 4px 6px #00000030, 0 6px 10px #00000015;
+}
+
+body {
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  background-color: var(--bg);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-y: hidden;
+}
+
+.container {
+  max-width: 700px;
+  width: 100%;
+  padding: 30px;
+  margin: 50px auto 0;
+  border-radius: 12px;
+  background-color: var(--card-bg);
+  box-shadow: var(--shadow-m);
+}
+
+h1 {
+  color: var(--accent);
+  font-size: 2.5em;
+  margin-bottom: 0.2em;
+  border-bottom: 2px solid var(--code-bg);
+  padding-bottom: 10px;
+}
+
+p {
+  color: var(--text-halfmute);
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin-top: 1.5em;
+}
+
+code {
+  background: var(--code-bg);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-family: 'Fira Code', 'Cascadia Mono', monospace;
+  font-size: 0.95em;
+  white-space: nowrap;
+  overflow-x: auto;
+  display: inline-block;
+  box-shadow: var(--shadow-s);
+}
